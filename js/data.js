@@ -1,5 +1,5 @@
-import {getLocation, getRandomPositiveInteger, getRandomPositiveFloat, getRandomItem, getRandomItems} from './util';
-import { ADS_COUNT, LOCATION, REALTY_TYPES, CHECK_VALUES, FEATURES, PHOTOS, } from './const';
+import {getLocation, getRandomPositiveInteger, getRandomPositiveFloat, getRandomItem, getRandomItems} from './util.js';
+import { ADS_COUNT, LOCATION, REALTY_TYPES, CHECK_VALUES, FEATURES, PHOTOS, } from './const.js';
 
 const generateAds = () => {
   const dataAds = [];
