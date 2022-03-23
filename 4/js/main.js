@@ -1,2 +1,2 @@
-import {generateAds} from './data';
-console.log(generateAds());
+import {generateAds} from './data.js';
+generateAds();
