@@ -25,8 +25,8 @@ const generateAds = () => {
           photos: getRandomItems(PHOTOS, 3),
         },
         location: {
-          lat: getRandomPositiveFloat(LOCATION.n1, LOCATION.n2, LOCATION.floatNumber),
-          lng: getRandomPositiveFloat(LOCATION.e1, LOCATION.e2, LOCATION.floatNumber),
+          lat: getRandomPositiveFloat(LOCATION.latitudeMin, LOCATION.latitudeMax, LOCATION.floatNumber),
+          lng: getRandomPositiveFloat(LOCATION.longitudeMin, LOCATION.longitudeMax, LOCATION.floatNumber),
         },
       }
     );

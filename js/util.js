@@ -13,8 +13,8 @@ const getRandomPositiveFloat = function (a, b, digits = 1) {
 };
 
 const getLocation = function (location) {
-  const lat = getRandomPositiveFloat(location.n1, location.n2, location.floatNumber);
-  const lag = getRandomPositiveFloat(location.e1, location.e2, location.floatNumber);
+  const lat = getRandomPositiveFloat(location.latitudeMin, location.latitudeMax, location.floatNumber);
+  const lag = getRandomPositiveFloat(location.longitudeMin, location.longitudeMax, location.floatNumber);
   return `${lat}, ${lag}`;
 };
 
