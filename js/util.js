@@ -23,7 +23,7 @@ const getRandomItem = function (items) {
 };
 
 const getRandomItems = function (items, num) {
-  return items.splice(Math.floor(Math.random() * num));
+  return items.slice().splice(Math.floor(Math.random() * num));
 };
 
 const getOfferDescription = function (description) {
