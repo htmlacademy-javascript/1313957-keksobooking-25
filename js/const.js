@@ -8,13 +8,13 @@ const LOCATION = {
   floatNumber: 5,
 };
 
-const REALTY_TYPES = [
-  'palace',
-  'flat',
-  'house',
-  'bungalow',
-  'hotel',
-];
+const REALTY_TYPES = {
+  house: 'Дом',
+  hotel: 'Отель',
+  palace: 'Дворец',
+  flat: 'Квартира',
+  bungalo: 'Бунгало',
+};
 
 const CHECK_VALUES = [
   '12:00',
@@ -37,6 +37,16 @@ const PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
 ];
 
+const DESCRIPTIONS = [
+  'сдаю недорого',
+  'тараканы в подарок',
+  'недалеко от моря - закачаешься',
+  'соседи спокойные',
+  'нет микроволновки',
+  'удобства во дворе',
+  'разные разности бесплатно',
+];
+
 export {
-  ADS_COUNT, LOCATION, REALTY_TYPES, CHECK_VALUES, FEATURES, PHOTOS,
+  ADS_COUNT, LOCATION, REALTY_TYPES, CHECK_VALUES, FEATURES, PHOTOS, DESCRIPTIONS,
 };

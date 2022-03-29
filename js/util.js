@@ -26,10 +26,16 @@ const getRandomItems = function (items, num) {
   return items.splice(Math.floor(Math.random() * num));
 };
 
+const getOfferDescription = function (description) {
+  const desc = getRandomItems(description, 6);
+  return desc.join(', ');
+};
+
 export {
   getRandomPositiveInteger,
   getRandomPositiveFloat,
   getLocation,
   getRandomItem,
   getRandomItems,
+  getOfferDescription,
 };
