@@ -1,2 +1,5 @@
-import {getMockAds} from './popup.js';
-getMockAds();
+import {disableMap, enableMap} from './map.js';
+
+disableMap();
+setTimeout(enableMap, 5000);
+
