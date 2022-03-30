@@ -1,2 +1,2 @@
-import {generateAds} from './data.js';
-generateAds();
+import {getMockAds} from './popup.js';
+getMockAds();
