@@ -1028,3 +1028,10 @@ fieldset {
 .hidden {
   display: none;
 }
+
+/* Сообщения об ошибках при валидации */
+.ad-form__error {
+  display: block;
+  font-size: 0.85em;
+  color: #c00;
+}
