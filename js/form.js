@@ -8,7 +8,8 @@ const pristine = new Pristine(form, {
 }, false);
 
 function validateTitle (value) {
-  return value.length >= 30 && value.length <= 100;
+  const titleLength = value.length;
+  return titleLength >= 30 && titleLength <= 100;
 }
 
 pristine.addValidator(
@@ -42,7 +43,7 @@ const roomNumber = form.querySelector('#room_number');
 const capacity = form.querySelector('#capacity');
 const roomNumberOption = {
   '1' : ['1'],
-  '2' : ['2' , '3'],
+  '2' : ['1' , '2'],
   '3' : ['3', '2', '1'],
   '100' : ['0'],
 };
@@ -55,7 +56,7 @@ function getCapacityErrorMessage () {
   return `
   ${roomNumber.value}
   ${roomNumber.value === '1' ? 'комната не для' :' комнаты не для'}
-  ${capacity.value}
+  ${capacity.value !== '0' ? capacity.value : ''}
   ${capacity.value === '1' ? 'гостя' :' гостей'}
   `;
 }
@@ -64,9 +65,9 @@ pristine.addValidator(roomNumber, validateCapacity, getCapacityErrorMessage);
 pristine.addValidator(capacity, validateCapacity, getCapacityErrorMessage);
 
 form.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  if (pristine.validate()) {
-    this.submit();
+  const submitForm = pristine.validate();
+  if (!submitForm) {
+    evt.preventDefault();
   }
 });
 
