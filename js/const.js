@@ -13,7 +13,24 @@ const REALTY_TYPES = {
   hotel: 'Отель',
   palace: 'Дворец',
   flat: 'Квартира',
-  bungalo: 'Бунгало',
+  bungalow: 'Бунгало',
+};
+
+const REALTY_DECLENSION = {
+  house: 'дома',
+  hotel: 'отеля',
+  palace: 'дворца',
+  flat: 'квартиры',
+  bungalow: 'бунгало',
+};
+
+
+const REALTY_PRICES = {
+  'bungalow': '0',
+  'flat': '1000',
+  'hotel': '3000',
+  'house': '5000',
+  'palace': '10000',
 };
 
 const CHECK_VALUES = [
@@ -48,5 +65,5 @@ const DESCRIPTIONS = [
 ];
 
 export {
-  ADS_COUNT, LOCATION, REALTY_TYPES, CHECK_VALUES, FEATURES, PHOTOS, DESCRIPTIONS,
+  ADS_COUNT, LOCATION, REALTY_TYPES, REALTY_PRICES, REALTY_DECLENSION, CHECK_VALUES, FEATURES, PHOTOS, DESCRIPTIONS,
 };
