@@ -8,6 +8,11 @@ const LOCATION = {
   floatNumber: 5,
 };
 
+const MAP_COORDINATES = {
+  latitude: 35.675,
+  longitude: 139.75,
+};
+
 const REALTY_TYPES = {
   house: 'Дом',
   hotel: 'Отель',
@@ -23,7 +28,6 @@ const REALTY_DECLENSION = {
   flat: 'квартиры',
   bungalow: 'бунгало',
 };
-
 
 const REALTY_PRICES = {
   'bungalow': '0',
@@ -65,5 +69,5 @@ const DESCRIPTIONS = [
 ];
 
 export {
-  ADS_COUNT, LOCATION, REALTY_TYPES, REALTY_PRICES, REALTY_DECLENSION, CHECK_VALUES, FEATURES, PHOTOS, DESCRIPTIONS,
+  ADS_COUNT, LOCATION, MAP_COORDINATES, REALTY_TYPES, REALTY_PRICES, REALTY_DECLENSION, CHECK_VALUES, FEATURES, PHOTOS, DESCRIPTIONS,
 };
