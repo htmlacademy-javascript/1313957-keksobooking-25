@@ -1,20 +1,21 @@
 import {MAP_COORDINATES} from './const.js';
-import {generateAds} from './data.js';
 import {createPopupElement} from './popup.js';
+import {loadingError} from './message.js';
 
 const {latitude, longitude} = MAP_COORDINATES;
+
 const addressInput = document.querySelector('#address');
+const form = document.querySelector('.ad-form');
+const formFieldset = form.querySelectorAll('fieldset');
+const mapFiltersForm = document.querySelector('.map__filters');
+const mapSelects = mapFiltersForm.querySelectorAll('select');
 
 const disableMap = () => {
-  const form = document.querySelector('.ad-form');
   form.classList.add('ad-form--disabled');
-  const formFieldset = form.querySelectorAll('fieldset');
   formFieldset.forEach((field) => {
     field.setAttribute('disabled', 'disabled');
   });
 
-  const mapFiltersForm = document.querySelector('.map__filters');
-  const mapSelects = mapFiltersForm.querySelectorAll('select');
   mapSelects.forEach((select) => {
     select.setAttribute('disabled', 'disabled');
   });
@@ -26,15 +27,11 @@ const disableMap = () => {
 };
 
 const enableMap = () => {
-  const form = document.querySelector('.ad-form');
   form.classList.remove('ad-form--disabled');
-  const formFieldset = form.querySelectorAll('fieldset');
   formFieldset.forEach((field) => {
     field.removeAttribute('disabled');
   });
 
-  const mapFiltersForm = document.querySelector('.map__filters');
-  const mapSelects = mapFiltersForm.querySelectorAll('select');
   mapSelects.forEach((select) => {
     select.removeAttribute('disabled');
   });
@@ -91,25 +88,67 @@ mainMarker.on('moveend', (evt) => {
 
 const pin = L.icon({
   iconUrl: './img/pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
 });
 
-const popup = document.querySelector('#card').content.querySelector('.popup');
+const renderPoints = (points) => {
+  points.forEach(({author, offer, location}) => {
+    const marker = L.marker(
+      {
+        lat: location.lat,
+        lng: location.lng,
+      },
+      {
+        icon: pin,
+      }
+    );
+    marker
+      .addTo(map)
+      .bindPopup(createPopupElement(author, offer));
+  });
+};
 
-const points = generateAds();
-
-points.forEach(({author, offer, location: {lat, lng} }) => {
-  const marker = L.marker(
+const getDataForMap = (onSuccess, onError) => {
+  fetch('https://25.javascript.pages.academy/keksobooking/data',
     {
-      lat,
-      lng,
+      method: 'GET',
     },
-    {
-      icon: pin,
-    }
-  );
-  marker
-    .addTo(map)
-    .bindPopup(createPopupElement(popup, author, offer));
-});
+  )
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+
+      throw new Error(`${response.status} ${response.statusText}`);
+    })
+    .then((data) => {
+      onSuccess(data);
+    })
+    .catch(() => {
+      onError();
+    });
+};
+
+getDataForMap(
+  (advertisements) => renderPoints(advertisements),
+  () => loadingError()
+);
+
+const resetMapSettings = () => {
+  map.closePopup();
+  mapFiltersForm.reset();
+  addressInput.value = `координаты: ${latitude}, ${longitude}`;
+
+  map.setView({
+    lat: latitude,
+    lng: longitude,
+  }, 13);
+
+  mainMarker.setLatLng({
+    lat: latitude,
+    lng: longitude,
+  }, 13);
+};
+
+export {resetMapSettings};
