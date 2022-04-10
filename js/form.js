@@ -1,4 +1,7 @@
 import {REALTY_DECLENSION, REALTY_PRICES} from './const.js';
+import {messageError, messageSuccess} from './message.js';
+import {resetMapSettings} from './map.js';
+import {sendFormData} from './api.js';
 
 const form = document.querySelector('.ad-form');
 
@@ -121,10 +124,37 @@ timeOut.addEventListener('change', () => {
   setOptionSelected(timeOut.children, idx);
 });
 
-form.addEventListener('submit', (evt) => {
-  const submitForm = pristine.validate();
-  if (!submitForm) {
+const resetFormSettings = function () {
+  form.reset();
+
+  setOptionSelected(timeIn.children, 0);
+  setOptionSelected(timeOut.children, 0);
+
+  const sliderElement = form.querySelector('.ad-form__slider');
+  sliderElement.noUiSlider.set(5000);
+};
+
+const sendForm = (onSuccess, onError) => {
+  form.addEventListener('submit', (evt) => {
     evt.preventDefault();
-  }
+
+    const isValid = pristine.validate();
+    if (isValid) {
+      form.classList.add('ad-form--disabled');
+      const formData = new FormData(evt.target);
+      sendFormData(formData, onSuccess, onError);
+      form.classList.remove('ad-form--disabled');
+    }
+  });
+};
+
+const buttonReset = form.querySelector('.ad-form__reset');
+buttonReset.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  resetFormSettings();
+  resetMapSettings();
 });
 
+sendForm(messageSuccess, messageError);
+
+export {resetFormSettings};
