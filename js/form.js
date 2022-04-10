@@ -1,6 +1,7 @@
 import {REALTY_DECLENSION, REALTY_PRICES} from './const.js';
 import {messageError, messageSuccess} from './message.js';
 import {resetMapSettings} from './map.js';
+import {sendFormData} from './api.js';
 
 const form = document.querySelector('.ad-form');
 
@@ -141,26 +142,8 @@ const sendForm = (onSuccess, onError) => {
     if (isValid) {
       form.classList.add('ad-form--disabled');
       const formData = new FormData(evt.target);
-
-      fetch(
-        'https://25.javascript.pages.academy/keksobooking',
-        {
-          method: 'POST',
-          body: formData,
-        },
-      )
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error();
-          }
-        })
-        .then(() => {
-          resetFormSettings();
-          resetMapSettings();
-          onSuccess();
-        })
-        .catch(() => onError())
-        .finally(() => form.classList.remove('ad-form--disabled'));
+      sendFormData(formData, onSuccess, onError);
+      form.classList.remove('ad-form--disabled');
     }
   });
 };
@@ -173,3 +156,5 @@ buttonReset.addEventListener('click', (evt) => {
 });
 
 sendForm(messageSuccess, messageError);
+
+export {resetFormSettings};

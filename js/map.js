@@ -1,6 +1,7 @@
 import {MAP_COORDINATES} from './const.js';
 import {createPopupElement} from './popup.js';
 import {loadingError} from './message.js';
+import {gerMapData} from './api.js';
 
 const {latitude, longitude} = MAP_COORDINATES;
 
@@ -109,32 +110,6 @@ const renderPoints = (points) => {
   });
 };
 
-const getDataForMap = (onSuccess, onError) => {
-  fetch('https://25.javascript.pages.academy/keksobooking/data',
-    {
-      method: 'GET',
-    },
-  )
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-
-      throw new Error(`${response.status} ${response.statusText}`);
-    })
-    .then((data) => {
-      onSuccess(data);
-    })
-    .catch(() => {
-      onError();
-    });
-};
-
-getDataForMap(
-  (advertisements) => renderPoints(advertisements),
-  () => loadingError()
-);
-
 const resetMapSettings = () => {
   map.closePopup();
   mapFiltersForm.reset();
@@ -150,5 +125,10 @@ const resetMapSettings = () => {
     lng: longitude,
   }, 13);
 };
+
+const onSuccess = (advertisements) => renderPoints(advertisements);
+const onError = () => loadingError();
+
+gerMapData( onSuccess, onError);
 
 export {resetMapSettings};
