@@ -8,6 +8,17 @@ const LOCATION = {
   floatNumber: 5,
 };
 
+const PIN_SIZES = {
+  mainPinSize: {
+    iconSize: [52, 52],
+    iconAnchor: [26, 52],
+  },
+  pinSize: {
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+  },
+};
+
 const MAP_COORDINATES = {
   latitude: 35.675,
   longitude: 139.75,
@@ -68,6 +79,30 @@ const DESCRIPTIONS = [
   'разные разности бесплатно',
 ];
 
+const ADV_COUNT = 10;
+
+const FILTER_DEFAULT = 'any';
+
+const PRICE_VALUES = {
+  'low': {
+    min: 0,
+    max: 10000
+  },
+  'high': {
+    min: 50000,
+    max: 100000
+  },
+  'middle': {
+    min: 10000,
+    max: 50000
+  },
+  'any': {
+    min: 0,
+    max: 100000
+  },
+};
+
 export {
-  ADS_COUNT, LOCATION, MAP_COORDINATES, REALTY_TYPES, REALTY_PRICES, REALTY_DECLENSION, CHECK_VALUES, FEATURES, PHOTOS, DESCRIPTIONS,
+  ADS_COUNT, LOCATION, PIN_SIZES, MAP_COORDINATES, REALTY_TYPES, REALTY_PRICES, REALTY_DECLENSION,
+  CHECK_VALUES, FEATURES, PHOTOS, DESCRIPTIONS, ADV_COUNT, FILTER_DEFAULT, PRICE_VALUES,
 };

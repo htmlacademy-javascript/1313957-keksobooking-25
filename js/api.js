@@ -1,7 +1,8 @@
 import {resetMapSettings} from './map.js';
 import {resetFormSettings} from './form.js';
+import {ADV_COUNT} from './const.js';
 
-const gerMapData = (onSuccess, onError) => {
+const getMapData = (onSuccess, onError) => {
   fetch('https://25.javascript.pages.academy/keksobooking/data',
     {
       method: 'GET',
@@ -14,7 +15,8 @@ const gerMapData = (onSuccess, onError) => {
       throw new Error();
     })
     .then((data) => {
-      onSuccess(data);
+      const shortData = data.slice(0, ADV_COUNT);
+      onSuccess(shortData);
     })
     .catch(() => {
       onError();
@@ -42,5 +44,5 @@ const sendFormData = (formData, onSuccess, onError) => {
     .catch(() => onError());
 };
 
-export {gerMapData, sendFormData};
+export {getMapData, sendFormData};
 

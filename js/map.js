@@ -1,29 +1,23 @@
-import {MAP_COORDINATES} from './const.js';
+import {MAP_COORDINATES, PIN_SIZES} from './const.js';
 import {createPopupElement} from './popup.js';
 import {loadingError} from './message.js';
-import {gerMapData} from './api.js';
+import {getMapData} from './api.js';
+import {filterAds} from './filter.js';
+import {debounce} from './debounce.js';
 
 const {latitude, longitude} = MAP_COORDINATES;
+const {mainPinSize, pinSize} = PIN_SIZES;
 
+const mapFilters = document.querySelector('.map__filters');
 const addressInput = document.querySelector('#address');
 const form = document.querySelector('.ad-form');
 const formFieldset = form.querySelectorAll('fieldset');
-const mapFiltersForm = document.querySelector('.map__filters');
-const mapSelects = mapFiltersForm.querySelectorAll('select');
 
 const disableMap = () => {
+  mapFilters.classList.add('map__filters--disabled');
   form.classList.add('ad-form--disabled');
   formFieldset.forEach((field) => {
     field.setAttribute('disabled', 'disabled');
-  });
-
-  mapSelects.forEach((select) => {
-    select.setAttribute('disabled', 'disabled');
-  });
-  const mapFeatures = mapFiltersForm.querySelector('.map__features');
-  const inputFeatures = mapFeatures.querySelectorAll('.map__checkbox');
-  inputFeatures.forEach((input) => {
-    input.setAttribute('disabled', 'disabled');
   });
 };
 
@@ -31,15 +25,6 @@ const enableMap = () => {
   form.classList.remove('ad-form--disabled');
   formFieldset.forEach((field) => {
     field.removeAttribute('disabled');
-  });
-
-  mapSelects.forEach((select) => {
-    select.removeAttribute('disabled');
-  });
-  const mapFeatures = mapFiltersForm.querySelector('.map__features');
-  const inputFeatures = mapFeatures.querySelectorAll('.map__checkbox');
-  inputFeatures.forEach((input) => {
-    input.removeAttribute('disabled');
   });
 };
 
@@ -65,8 +50,8 @@ L.tileLayer(
 
 const mainPin = L.icon({
   iconUrl: './img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
+  iconSize: mainPinSize.iconSize,
+  iconAnchor: mainPinSize.iconAnchor,
 });
 
 const mainMarker = L.marker(
@@ -89,9 +74,11 @@ mainMarker.on('moveend', (evt) => {
 
 const pin = L.icon({
   iconUrl: './img/pin.svg',
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconSize: pinSize.iconSize,
+  iconAnchor: pinSize.iconSize,
 });
+
+const markerGroup = L.layerGroup().addTo(map);
 
 const renderPoints = (points) => {
   points.forEach(({author, offer, location}) => {
@@ -105,14 +92,36 @@ const renderPoints = (points) => {
       }
     );
     marker
-      .addTo(map)
+      .addTo(markerGroup)
       .bindPopup(createPopupElement(author, offer));
   });
 };
 
+const setMapFilters = (cb) => {
+  mapFilters.addEventListener('change', () => {
+    markerGroup.clearLayers();
+    cb();
+  });
+};
+
+const onSuccess = (advertisements) => {
+  renderPoints(advertisements);
+  setMapFilters(debounce(
+    () => renderPoints(filterAds(advertisements)),
+  ));
+  mapFilters.classList.remove('map__filters--disabled');
+};
+
+const onError = () => {
+  loadingError();
+};
+
+getMapData(onSuccess, onError);
+
 const resetMapSettings = () => {
   map.closePopup();
-  mapFiltersForm.reset();
+  mapFilters.reset();
+  getMapData(onSuccess, onError);
   addressInput.value = `координаты: ${latitude}, ${longitude}`;
 
   map.setView({
@@ -126,9 +135,4 @@ const resetMapSettings = () => {
   }, 13);
 };
 
-const onSuccess = (advertisements) => renderPoints(advertisements);
-const onError = () => loadingError();
-
-gerMapData( onSuccess, onError);
-
-export {resetMapSettings};
+export {resetMapSettings, markerGroup};
