@@ -97,18 +97,15 @@ const renderPoints = (points) => {
   });
 };
 
-const setMapFilters = (cb) => {
-  mapFilters.addEventListener('change', () => {
-    markerGroup.clearLayers();
-    cb();
-  });
-};
+const onFilterChange = (ads) => debounce(renderPoints(filterAds(ads)));
 
-const onSuccess = (advertisements) => {
-  renderPoints(advertisements);
-  setMapFilters(debounce(
-    () => renderPoints(filterAds(advertisements)),
-  ));
+const onSuccess = (ads) => {
+  renderPoints(ads);
+  mapFilters.addEventListener('change',  () => {
+    markerGroup.clearLayers();
+    onFilterChange(ads);
+  });
+
   mapFilters.classList.remove('map__filters--disabled');
 };
 
