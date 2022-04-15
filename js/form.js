@@ -2,6 +2,7 @@ import {REALTY_DECLENSION, REALTY_PRICES} from './const.js';
 import {messageError, messageSuccess} from './message.js';
 import {resetMapSettings} from './map.js';
 import {sendFormData} from './api.js';
+import {resetUpload} from './upload.js';
 
 const form = document.querySelector('.ad-form');
 
@@ -153,6 +154,7 @@ buttonReset.addEventListener('click', (evt) => {
   evt.preventDefault();
   resetFormSettings();
   resetMapSettings();
+  resetUpload();
 });
 
 sendForm(messageSuccess, messageError);
