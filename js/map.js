@@ -4,6 +4,7 @@ import {loadingError} from './message.js';
 import {getMapData} from './api.js';
 import {filterAds} from './filter.js';
 import {debounce} from './debounce.js';
+import {onButtonResetClick} from './form.js';
 
 const {latitude, longitude} = MAP_COORDINATES;
 const {mainPinSize, pinSize} = PIN_SIZES;
@@ -107,6 +108,8 @@ const onSuccess = (ads) => {
   });
 
   mapFilters.classList.remove('map__filters--disabled');
+
+  onButtonResetClick(() => renderPoints(ads));
 };
 
 const onError = () => {
@@ -118,7 +121,6 @@ getMapData(onSuccess, onError);
 const resetMapSettings = () => {
   map.closePopup();
   mapFilters.reset();
-  getMapData(onSuccess, onError);
   addressInput.value = `координаты: ${latitude}, ${longitude}`;
 
   map.setView({

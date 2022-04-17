@@ -150,13 +150,17 @@ const sendForm = (onSuccess, onError) => {
 };
 
 const buttonReset = form.querySelector('.ad-form__reset');
-buttonReset.addEventListener('click', (evt) => {
-  evt.preventDefault();
-  resetFormSettings();
-  resetMapSettings();
-  resetUpload();
-});
+
+const onButtonResetClick = (cb) => {
+  buttonReset.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    resetFormSettings();
+    resetMapSettings();
+    resetUpload();
+    cb();
+  });
+};
 
 sendForm(messageSuccess, messageError);
 
-export {resetFormSettings};
+export {resetFormSettings, onButtonResetClick};
