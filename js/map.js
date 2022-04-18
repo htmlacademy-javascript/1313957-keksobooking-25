@@ -98,13 +98,11 @@ const renderPoints = (points) => {
   });
 };
 
-const onFilterChange = (ads) => debounce(renderPoints(filterAds(ads)));
-
 const onSuccess = (ads) => {
   renderPoints(ads);
   mapFilters.addEventListener('change',  () => {
     markerGroup.clearLayers();
-    onFilterChange(ads);
+    debounce(renderPoints(filterAds(ads)));
   });
 
   mapFilters.classList.remove('map__filters--disabled');
@@ -121,6 +119,7 @@ getMapData(onSuccess, onError);
 const resetMapSettings = () => {
   map.closePopup();
   mapFilters.reset();
+  mapFilters.dispatchEvent(new Event('change'));
   addressInput.value = `координаты: ${latitude}, ${longitude}`;
 
   map.setView({

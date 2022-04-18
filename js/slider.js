@@ -1,15 +1,15 @@
+import {SLIDER_SETTINGS} from './const.js';
+
 const sliderElement = document.querySelector('.ad-form__slider');
 const priceElement = document.querySelector('#price');
+const {range, start, step} = SLIDER_SETTINGS;
 
 priceElement.value = 5000;
 
 noUiSlider.create(sliderElement, {
-  range: {
-    min: 0,
-    max: 100000,
-  },
-  start: 5000,
-  step: 1,
+  range: range,
+  start: start,
+  step: step,
   connect: 'lower',
   format: {
     to: function (value) {
