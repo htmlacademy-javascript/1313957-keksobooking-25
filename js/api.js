@@ -1,6 +1,5 @@
-import {resetMapSettings} from './map.js';
-import {resetFormSettings} from './form.js';
-import {ADV_COUNT} from './const.js';
+import {clearData} from './form.js';
+import {INDEX_RANGES} from './const.js';
 
 const getMapData = (onSuccess, onError) => {
   fetch('https://25.javascript.pages.academy/keksobooking/data',
@@ -15,7 +14,7 @@ const getMapData = (onSuccess, onError) => {
       throw new Error();
     })
     .then((data) => {
-      const shortData = data.slice(0, ADV_COUNT);
+      const shortData = data.slice(INDEX_RANGES.start, INDEX_RANGES.end);
       onSuccess(shortData);
     })
     .catch(() => {
@@ -37,8 +36,7 @@ const sendFormData = (formData, onSuccess, onError) => {
       }
     })
     .then(() => {
-      resetFormSettings();
-      resetMapSettings();
+      clearData();
       onSuccess();
     })
     .catch(() => onError());

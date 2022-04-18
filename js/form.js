@@ -149,18 +149,22 @@ const sendForm = (onSuccess, onError) => {
   });
 };
 
+const clearData = () => {
+  resetFormSettings();
+  resetMapSettings();
+  resetUpload();
+};
+
 const buttonReset = form.querySelector('.ad-form__reset');
 
 const onButtonResetClick = (cb) => {
   buttonReset.addEventListener('click', (evt) => {
     evt.preventDefault();
-    resetFormSettings();
-    resetMapSettings();
-    resetUpload();
+    clearData();
     cb();
   });
 };
 
 sendForm(messageSuccess, messageError);
 
-export {resetFormSettings, onButtonResetClick};
+export {onButtonResetClick, clearData};

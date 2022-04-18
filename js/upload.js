@@ -23,8 +23,12 @@ photoInput.addEventListener('change', () => {
   const file = photoInput.files[0];
   const checkFile = matches(file);
   if (checkFile) {
-    const imgSrc = URL.createObjectURL(file);
-    photoContainer.innerHTML = `<img src=${imgSrc} alt="Фото жилья" width="70" height="70">`;
+    const imgTag = document.createElement('img');
+    imgTag.setAttribute('src', URL.createObjectURL(file));
+    imgTag.setAttribute('width', '70');
+    imgTag.setAttribute('height', '70');
+    imgTag.setAttribute('alt', 'Фото жилья');
+    photoContainer.appendChild(imgTag);
   }
 });
 
