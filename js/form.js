@@ -1,5 +1,5 @@
 import {REALTY_DECLENSION, REALTY_PRICES} from './const.js';
-import {messageError, messageSuccess} from './message.js';
+import {getMessageError, getMessageSuccess} from './message.js';
 import {resetMapSettings} from './map.js';
 import {sendFormData} from './api.js';
 import {resetUpload} from './upload.js';
@@ -157,7 +157,7 @@ const clearData = () => {
 
 const buttonReset = form.querySelector('.ad-form__reset');
 
-const onButtonResetClick = (cb) => {
+const clickButtonReset = (cb) => {
   buttonReset.addEventListener('click', (evt) => {
     evt.preventDefault();
     clearData();
@@ -165,6 +165,6 @@ const onButtonResetClick = (cb) => {
   });
 };
 
-sendForm(messageSuccess, messageError);
+sendForm(getMessageError, getMessageSuccess);
 
-export {onButtonResetClick, clearData};
+export {clickButtonReset, clearData};

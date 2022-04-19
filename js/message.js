@@ -14,14 +14,14 @@ const addListeners = (messageNode) => {
   });
 };
 
-const messageSuccess = () => {
+const getMessageSuccess = () => {
   const messageNode = success.cloneNode(true);
   body.appendChild(messageNode);
 
   addListeners(messageNode);
 };
 
-const messageError = () => {
+const getMessageError = () => {
   const messageNode = error.cloneNode(true);
   body.appendChild(messageNode);
 
@@ -48,4 +48,4 @@ const loadingError = () => {
   });
 };
 
-export {messageSuccess, messageError, loadingError};
+export {getMessageSuccess, getMessageError, loadingError};
