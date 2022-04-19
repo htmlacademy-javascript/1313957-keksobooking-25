@@ -24,10 +24,7 @@ jobs:
         run: npm ci
 
       - name: Linting
-        run: npm test
-
-      - name: Building
-        run: npm run build
+        run: npm run lint
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.2.2
